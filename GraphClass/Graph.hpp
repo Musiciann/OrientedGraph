@@ -6,42 +6,39 @@
 #include "Vertex.hpp"
 #include "Iterator.hpp"
 
-
 using namespace std;
 
-template<class value_type>
+template<typename Value_type>
 class Graph {
     private:
 
     int VertexCounter = 0;
 
-    vector<Vertex> Vertexes;
+    vector<Vertex<Value_type>> Vertexes;
 
-    typedef Graph& graph_reference;
-    typedef Vertex& vertex_reference;
-    typedef Graph* graph_pointer;
-    typedef Vertex* vertex_pointer;
-    typedef const Graph* const_graph_pointer;
-    typedef const Vertex* const_vertex_pointer;
-    typedef const Graph& const_graph_reference;
-    typedef const Vertex& const_vertex_reference;
-    typedef value_type& reference_value_type;
-    typedef const value_type& const_reference_value_type;
-
-    Iterator begin() const;
-
-    Iterator end() const;
+    typedef Graph<Value_type>& graph_reference;
+    typedef Vertex<Value_type>& vertex_reference;
+    typedef Graph<Value_type>* graph_pointer;
+    typedef Vertex<Value_type>* vertex_pointer;
+    typedef const Graph<Value_type>* const_graph_pointer;
+    typedef const Vertex<Value_type>* const_vertex_pointer;
+    typedef const Graph<Value_type>& const_graph_reference;
+    typedef const Vertex<Value_type>& const_vertex_reference;
+    typedef Value_type& reference_value_type;
+    typedef const Value_type& const_reference_value_type;
 
     bool CheckGraphVertexes(const_graph_reference OtherGraph) const;
 
-    bool CheckVertexes(const vector<vertex_pointer>& OtherVertexes, const vector<vertex_pointer>& Vertexes) const;
+    bool CheckVertexes(const vector<Vertex<Value_type>*>&  OtherVertexes, const vector<Vertex<Value_type>*>&  Vertexes) const;
 
     public:
 
     typedef Iterator<int> iterator;
     typedef Iterator<const int> const_iterator;
 
-    const size_t size;
+    Vertex<Value_type>* begin();
+
+    Vertex<Value_type>* end();
 
     Graph();
 
@@ -57,33 +54,27 @@ class Graph {
 
     unsigned int VertexDegree(const_vertex_pointer CurrentVertex) const;
 
-    unsigned int EdgeCardinality(const_vertex_pointer BeginVertex, const_vertex_pointer EndVertex) const;
+    unsigned int EdgeCardinality(const Vertex<Value_type>*  BeginVertex, const Vertex<Value_type>*  EndVertex) const;
 
     void AddVertex(const_reference_value_type value);
 
-    void AddOrientedEdge(const_vertex_pointer BeginVertex, const_vertex_pointer EndVertex);
+    void AddOrientedEdge(Vertex<Value_type>*  BeginVertex, Vertex<Value_type>*  EndVertex);
 
-    void DeleteVertex(vertex_pointer CurrentVertex);
+    void DeleteVertex(Vertex<Value_type>*  CurrentVertex);
 
-    void DeleteVertexIndex(unsigned int index);
+    void DeleteOrientedEdge(Vertex<Value_type>* BeginVertex, Vertex<Value_type>*  EndVertex);
 
-    void DeleteOrientedEdge(const_vertex_pointer BeginVertex, const_vertex_pointer EndVertex);
+    bool IsVertexExist(const Vertex<Value_type>*  CurrentVertex) const;
 
-    bool IsVertexExist(const_vertex_pointer CurrentVertex) const;
-
-    bool IsOrientedEdgeExist(const_vertex_pointer BeginVertex, const_vertex_pointer EndVertex) const;
+    bool IsOrientedEdgeExist(const Vertex<Value_type>* BeginVertex, const Vertex<Value_type>*  EndVertex) const;
 
     graph_reference operator = (const_graph_reference OtherGraph);
 
-    bool operator == (const_vertex_pointer CurrentVertex) const;
-
-    bool operator == (const_graph_reference CurrentGraph) const;
-
-    bool operator != (const_graph_reference CurrentGraph) const;
-
-    vertex_pointer operator [](unsigned int index);
+    Vertex<Value_type>* operator [](unsigned int index);
 
     ~Graph();
 
 };
+
+#include "Graph.tpp"
 

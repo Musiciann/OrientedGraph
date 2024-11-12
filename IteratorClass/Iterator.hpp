@@ -5,21 +5,27 @@
 #include <vector>
 
 template<typename Value_type>
-class Iterator: public std::iterator<input_iterator_tag, value_type>
+class Graph;
+
+template<typename Value_type>
+class Iterator: public std::iterator<std::input_iterator_tag, Value_type>
 {
-    friend class Graph;
+
+    friend class Graph<Value_type>;
+
 private:
-    Iterator(Value_type* p)
+
 public:
 
-    bool operator != (Iterator const& other) const;
+    Iterator(Value_type* ptr);
 
-    bool operator == (Iterator const& other) const;
+    Value_type operator*() const;
 
-    typename Iterator::reference operator*() const;
-
-    Iterator& operator++();
+    friend bool operator== (const Iterator& a, const Iterator& b){ return a.m_ptr == b.m_ptr; }
+    friend bool operator!= (const Iterator& a, const Iterator& b){ return a.m_ptr != b.m_ptr; }
 
 private:
-    Value_type* p;
+    Value_type* m_ptr;
 };
+
+#include "Iterator.tpp"

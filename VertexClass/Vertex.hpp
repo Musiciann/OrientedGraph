@@ -7,15 +7,19 @@
 using namespace std;
 
 template<typename value_type>
+class Graph;
+
+template<typename value_type>
 class Vertex {
-    friend class Graph;
+    friend class Graph<value_type>;
 private:
 
     value_type Value;
     vector<Vertex*> Neighbors;
-    unsigned int VertexID;
 
 public:
+
+    unsigned int VertexID;
 
     Vertex(value_type value);
 
@@ -24,4 +28,7 @@ public:
     value_type GetValue();
 
     void SetValue(value_type NewValue);
+
 };
+
+#include "Vertex.tpp"
